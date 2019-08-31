@@ -165,6 +165,9 @@ return [
         /*
          * Package Service Providers...
          */
+        Laracasts\Flash\FlashServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -223,6 +226,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Flash'     => Laracasts\Flash\Flash::class,
 
     ],
 
