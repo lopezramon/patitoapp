@@ -25,7 +25,17 @@ class DealerRepository extends BaseRepository
         'name',
         'password'
     ];
-
+    
+    /**
+     * Return searchable fields
+     *
+     * @return array
+     */
+    public function search($filter)
+    {
+        return $this->model->search($filter);
+    }
+    
     /**
      * Configure the Model
      **/

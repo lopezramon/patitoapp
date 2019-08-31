@@ -5,6 +5,8 @@ namespace App\Repositories\Admin;
 use App\Models\Admin\Task;
 use InfyOm\Generator\Common\BaseRepository;
 
+use function GuzzleHttp\Promise\task;
+
 /**
  * Class TaskRepository
  * @package App\Repositories\Admin
@@ -29,6 +31,37 @@ class TaskRepository extends BaseRepository
         'status',
         'id_distributor'
     ];
+
+    /**
+     * Return searchable fields
+     *
+     * @return array
+     */
+    public function search($filter)
+    {
+        $tasks = $this->model->search($filter)->get();
+        $numTasks = array();
+
+        foreach ($tasks as $task) {    
+            $repeat=false;
+            for($i=0;$i<count($numTasks);$i++)
+            {
+                if($numTasks[$i]['name']==$task['name'])
+                {
+                    $numTasks[$i]['items']+= 1 ;
+                    $repeat=true;
+                    // break;
+                }
+            }
+            if($repeat==false)
+                $numTasks[] = array('name' => $task['name'], 'items' => 1);
+
+        }
+
+        return $numTasks;
+    }
+
+    
 
     /**
      * Configure the Model

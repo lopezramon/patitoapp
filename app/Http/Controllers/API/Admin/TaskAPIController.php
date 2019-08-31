@@ -40,6 +40,15 @@ class TaskAPIController extends AppBaseController
         $this->taskRepository->pushCriteria(new LimitOffsetCriteria($request));
         $tasks = $this->taskRepository->all();
 
+    
+        if ($request->has('searchdate')) {
+            $filter = $request->get('searchdate');
+            $tasksFilter = $this->taskRepository->search($filter);
+            $searchDate['date'] = $filter;
+            array_push($tasksFilter,$searchDate);
+            return $this->sendResponse($tasksFilter, 'Number tasks successfully');
+        }
+
         return $this->sendResponse($tasks->toArray(), 'Tasks retrieved successfully');
     }
 

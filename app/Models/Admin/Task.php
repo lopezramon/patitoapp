@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models\Admin
  * @version August 31, 2019, 3:50 am UTC
  *
- * @property \App\Models\Admin\Distributor idDistributor
+ * @property \App\Models\Admin\Dealer dealer
  * @property string date
  * @property string name
  * @property string address
@@ -80,8 +80,23 @@ class Task extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idDistributor()
+    public function dealer()
     {
-        return $this->belongsTo(\App\Models\Admin\Distributor::class, 'id_dealer');
+        return $this->belongsTo(\App\Models\Admin\Dealer::class, 'id_dealer');
+    }
+
+    /**
+     * Scope a query to only include popular users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $filter)
+    {
+        return $query->where('date', '=', $filter)
+                // INNER JOIN dealers d on d.id=t.id_dealer
+                ->join('dealers', 'tasks.id_dealer', '=', 'dealers.id')   
+        ;
+    
     }
 }
