@@ -1,0 +1,2 @@
+php artisan infyom:api_scaffold Distributor   --prefix=admin --fromTable --tableName=distributors   --skip=migration,views,tests,menu
+php artisan infyom:api_scaffold Task          --prefix=admin --fromTable --tableName=tasks          --skip=migration,views,tests,menu
