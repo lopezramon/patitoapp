@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float length
  * @property integer merchandise
  * @property string status
- * @property integer id_distributor
+ * @property integer id_dealer
  */
 class Task extends Model
 {
@@ -41,7 +41,7 @@ class Task extends Model
         'length',
         'merchandise',
         'status',
-        'id_distributor'
+        'id_dealer'
     ];
 
     /**
@@ -58,7 +58,7 @@ class Task extends Model
         'length' => 'float',
         'merchandise' => 'integer',
         'status' => 'string',
-        'id_distributor' => 'integer'
+        'id_dealer' => 'integer'
     ];
 
     /**
@@ -74,7 +74,7 @@ class Task extends Model
         'length' => 'required',
         'merchandise' => 'required',
         'status' => 'required',
-        'id_distributor' => 'required'
+        'id_dealer' => 'required'
     ];
 
     /**
@@ -82,6 +82,6 @@ class Task extends Model
      **/
     public function idDistributor()
     {
-        return $this->belongsTo(\App\Models\Admin\Distributor::class, 'id_distributor');
+        return $this->belongsTo(\App\Models\Admin\Distributor::class, 'id_dealer');
     }
 }

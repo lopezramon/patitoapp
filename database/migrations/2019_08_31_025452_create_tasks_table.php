@@ -16,7 +16,7 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->string('date');
+            $table->date('date');
             $table->string('name');
             $table->string('address');
             $table->double('latitude',19,0);
@@ -24,8 +24,8 @@ class CreateTasksTable extends Migration
             $table->integer('merchandise');
             $table->string('status');
 
-            $table->unsignedInteger('id_distributor');
-            $table->foreign('id_distributor')->references('id')->on('distributors');
+            $table->unsignedInteger('id_dealer');
+            $table->foreign('id_dealer')->references('id')->on('dealers');
 
             
             $table->timestamps();
