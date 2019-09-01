@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Illuminate\Support\Facades\Cache;
 use Response;
 
 /**
@@ -42,10 +43,20 @@ class TaskAPIController extends AppBaseController
 
     
         if ($request->has('searchdate')) {
+
+            //Verification of key on cache
+            if (Cache::has('searchdate')) {
+                $value = Cache::get('searchdate');
+                return $this->sendResponse($value, 'Number tasks - Value in cache successfully');
+            }
+
             $filter = $request->get('searchdate');
             $tasksFilter = $this->taskRepository->search($filter);
-            $searchDate['date'] = $filter;
-            array_push($tasksFilter,$searchDate);
+            
+            //addCache time 5min
+            $expiresAt = now()->addMinutes(5);
+            Cache::put('searchdate', $tasksFilter, $expiresAt);
+
             return $this->sendResponse($tasksFilter, 'Number tasks successfully');
         }
 

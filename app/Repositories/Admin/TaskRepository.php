@@ -41,22 +41,24 @@ class TaskRepository extends BaseRepository
     {
         $tasks = $this->model->search($filter)->get();
         $numTasks = array();
-
+        
         foreach ($tasks as $task) {    
             $repeat=false;
             for($i=0;$i<count($numTasks);$i++)
             {
                 if($numTasks[$i]['name']==$task['name'])
-                {
+                {   
                     $numTasks[$i]['items']+= 1 ;
                     $repeat=true;
-                    // break;
                 }
             }
             if($repeat==false)
                 $numTasks[] = array('name' => $task['name'], 'items' => 1);
 
         }
+        //add search date in array()
+        $searchDate['date'] = $filter;
+        array_push($numTasks,$searchDate);
 
         return $numTasks;
     }
