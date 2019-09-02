@@ -60,6 +60,10 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ## Contributing
 
+## Ejecurat Cron
+crontab -e
+add * * * * * php /ruta/patitoapp/artisan schedule:run >> /dev/null 2>&1
+
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
 ## Security Vulnerabilities

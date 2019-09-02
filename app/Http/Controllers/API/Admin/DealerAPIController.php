@@ -221,7 +221,7 @@ class DealerAPIController extends AppBaseController
         if (empty($dealer)) {
             return $this->sendError('Dealer not found');
         }
-
+ 
         $dealer = $this->dealerRepository->update($input, $id);
 
         return $this->sendResponse($dealer->toArray(), 'Dealer updated successfully');

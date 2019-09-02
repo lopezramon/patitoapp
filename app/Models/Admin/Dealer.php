@@ -3,7 +3,9 @@
 namespace App\Models\Admin;
 
 use Eloquent as Model;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Dealer
@@ -15,9 +17,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string name
  * @property string password
  */
-class Dealer extends Model
+class Dealer extends Authenticatable
 {
-    
+    use HasApiTokens;
+
     use SoftDeletes;
     
     public $table = 'Dealers';
@@ -35,7 +38,11 @@ class Dealer extends Model
         'name',
         'password'
     ];
-    
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
     /**
      * The attributes that should be casted to native types.
      *

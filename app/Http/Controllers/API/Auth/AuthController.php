@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Dealer;
 use Illuminate\Database\QueryException;
 
 class AuthController extends Controller
@@ -28,13 +29,23 @@ class AuthController extends Controller
         $input['password'] = bcrypt($request->get('password'));
         try {
             $user = User::create($input);
+            $dealer['name']    = $user['name'];
+            $dealer['login']    = $user['email'];
+            $dealer['email']    = $user['email'];
+            $dealer['password'] = $user['password'];
+            Dealer::updateOrCreate([
+                'name'     => $dealer['name'],
+                'login'    => $dealer['login'],
+                'email'    => $dealer['email'],
+                'password' => $dealer['password'],
+                ]);
         } catch (QueryException $e) {
             return response()->json(['message' => $e, 'success' => false],409);
         } catch (\Throwable $th) {
             return response()->json(['message' => $th, 'success' => false],500);
         }
         
-        $token =  $user->createToken('MyApp')->accessToken;
+        $token =  $user->createToken('patitoapp')->accessToken;
 
         return response()->json([
             'token' => $token,
@@ -46,7 +57,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
-            $token =  $user->createToken('MyApp')->accessToken;
+            $token =  $user->createToken('patitoapp')->accessToken;
             return response()->json([
                 'token' => $token,
                 'user' => $user
