@@ -41,7 +41,6 @@ class TaskAPIController extends AppBaseController
         $this->taskRepository->pushCriteria(new LimitOffsetCriteria($request));
         $tasks = $this->taskRepository->all();
 
-    
         if ($request->has('searchdate')) {
 
             //Verification of key on cache

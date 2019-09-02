@@ -14,12 +14,9 @@ use Illuminate\Http\Request;
 */
 Route::post('register', 'Auth\AuthController@register');
 Route::post('login', 'Auth\AuthController@login');
-Route::get('logout', 'Auth\AuthController@logout');
-
-Route::get('dealers', 'Admin\DealerAPIController@index');
-
-Route::group(['prefix' => 'admin', 'middleware' => ['auth:api','RestrictedSchedule']], function () {   
-    Route::resource('dealers', 'Admin\DealerAPIController');
+//RestrictedSchedule
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:api'], function () {   
     Route::resource('tasks', 'Admin\TaskAPIController');
-
+    Route::resource('dealers', 'Admin\DealerAPIController');
+    Route::get('logout', 'Auth\AuthController@logout');
 });
